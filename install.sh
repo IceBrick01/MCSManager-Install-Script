@@ -1,7 +1,7 @@
 #!/bin/bash
 printf "\033c"
 
-mcsmanager_install_path="/opt/mcsmzhtw"
+mcsmanager_install_path="/opt/mcsmtw"
 node_install_path="/opt/node-v14.17.6-linux-x64"
 
 Red_Error() {
@@ -64,16 +64,16 @@ Install_MCSManager() {
 Create_Service() {
 
   echo "[x] Initialize the service file"
-  rm -f /etc/systemd/system/mcsmzhtw-daemon.service
-  rm -f /etc/systemd/system/mcsmzhtw-web.service
+  rm -f /etc/systemd/system/mcsmtw-daemon.service
+  rm -f /etc/systemd/system/mcsmtw-web.service
 
-  echo "[+] cat >>/etc/systemd/system/mcsmzhtw-daemon.service"
-  cat >>/etc/systemd/system/mcsmzhtw-daemon.service <<'EOF'
+  echo "[+] cat >>/etc/systemd/system/mcsmtw-daemon.service"
+  cat >>/etc/systemd/system/mcsmtw-daemon.service <<'EOF'
 [Unit]
 Description=MCSManager Daemon
 
 [Service]
-WorkingDirectory=/opt/mcsmzhtw/daemon
+WorkingDirectory=/opt/mcsmtw/daemon
 ExecStart=/usr/bin/node app.js
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
@@ -82,13 +82,13 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 EOF
 
-  echo "[+] cat >>/etc/systemd/system/mcsmzhtw-web.service"
-  cat >>/etc/systemd/system/mcsmzhtw-web.service <<'EOF'
+  echo "[+] cat >>/etc/systemd/system/mcsmtw-web.service"
+  cat >>/etc/systemd/system/mcsmtw-web.service <<'EOF'
 [Unit]
 Description=MCSManager Web
 
 [Service]
-WorkingDirectory=/opt/mcsmzhtw/web
+WorkingDirectory=/opt/mcsmtw/web
 ExecStart=/usr/bin/node app.js
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
@@ -100,19 +100,30 @@ EOF
   echo "[-] systemctl daemon-reload"
   systemctl daemon-reload
 
-  echo "[+] systemctl enable mcsmzhtw-daemon.service --now"
-  systemctl enable mcsmzhtw-daemon.service --now
+  echo "[+] systemctl enable mcsmtw-daemon.service --now"
+  systemctl enable mcsmtw-daemon.service --now
 
   sleep 4
 
-  echo "[+] systemctl enable mcsmzhtw-web.service --now"
-  systemctl enable mcsmzhtw-web.service --now
+  echo "[+] systemctl enable mcsmtw-web.service --now"
+  systemctl enable mcsmtw-web.service --now
 
   sleep 4
   
-  echo "[↓] wget -qO- https://raw.githubusercontent.com/IceBrick01/MCSManager-Client/main/setup.sh | bash"
-  wget -qO- https://raw.githubusercontent.com/IceBrick01/MCSManager-Client/main/setup.sh | bash
+  echo "[↓] 下載 MCSManager Client..."
+  rm -f /opt/mcsmtw.sh
+  wget -P /opt https://raw.githubusercontent.com/IceBrick01/MCSManager-Client/main/mcsmtw.sh
+  chmod -R 755 /opt/mcsmtw.sh
 
+  echo "[+] 安裝 MCSManager Client..."
+  rm -f /usr/local/bin/mcsmtw
+  ln -s /opt/mcsmtw.sh /usr/local/bin/mcsmtw
+
+  echo "=================================================================="
+  echo -e "\033[1;32mMCSManager TW Client - 安裝成功\033[0m"
+  echo "=================================================================="
+  echo "您可以在命令行使用 \"mcsmtw\" 呼出 MCSManager TW Client"
+  
   echo "=================================================================="
   echo -e "\033[1;32mWelcome to MCSManager (WEB)\033[0m"
   echo "=================================================================="
@@ -125,11 +136,11 @@ EOF
   echo "輸入 mcsmtw 以管理 mcsmanager"
   echo ""
   echo "=================================================================="
-  echo "systemctl restart mcsmzhtw-{daemon,web}.service"
-  echo "systemctl disable mcsmzhtw-{daemon,web}.service"
-  echo "systemctl enable mcsmzhtw-{daemon,web}.service"
-  echo "systemctl start mcsmzhtw-{daemon,web}.service"
-  echo "systemctl stop mcsmzhtw-{daemon,web}.service"
+  echo "systemctl restart mcsmtw-{daemon,web}.service"
+  echo "systemctl disable mcsmtw-{daemon,web}.service"
+  echo "systemctl enable mcsmtw-{daemon,web}.service"
+  echo "systemctl start mcsmtw-{daemon,web}.service"
+  echo "systemctl stop mcsmtw-{daemon,web}.service"
   echo "=================================================================="
 
 }
