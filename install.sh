@@ -38,7 +38,7 @@ Install_MCSManager() {
   cd ..
 
   echo "[↓] git clone mcsmanager/MCSManager-Web-Production.git"
-  git clone https://gitee.com/mcsmanager/MCSManager-Web-Production.git
+  git clone https://github.com/DreamStart-Team/MCSManager-Web-ChineseTraditional.git
 
   echo "[-] mv MCSManager-Web-Production web"
   mv MCSManager-Web-Production web
