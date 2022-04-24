@@ -109,6 +109,9 @@ EOF
   systemctl enable mcsmzhtw-web.service --now
 
   sleep 4
+  
+  echo "[↓] wget -qO- https://raw.githubusercontent.com/IceBrick01/MCSManager-Client/main/setup.sh | bash"
+  wget -qO- https://raw.githubusercontent.com/IceBrick01/MCSManager-Client/main/setup.sh | bash
 
   echo "=================================================================="
   echo -e "\033[1;32mWelcome to MCSManager (WEB)\033[0m"
@@ -119,6 +122,7 @@ EOF
   echo "Password: 123456"
   echo -e "\033[33mEnglish: You must expose ports 23333 and 24444 to use the service properly on the Internet.\033[0m"
   echo -e "\033[33mChinese: 安装且启动完毕，您必须开放 23333 与 24444 端口来确保面板的正常使用。\033[0m"
+  echo "輸入 mcsmtw 以管理 mcsmanager"
   echo ""
   echo "=================================================================="
   echo "systemctl restart mcsmzhtw-{daemon,web}.service"
