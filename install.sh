@@ -37,11 +37,11 @@ Install_MCSManager() {
   echo "[←] cd .."
   cd ..
 
-  echo "[↓] git clone mcsmanager/MCSManager-Web-Production.git"
+  echo "[↓] git clone DreamStart-Team/MCSManager-Web-ChineseTraditional.git"
   git clone https://github.com/DreamStart-Team/MCSManager-Web-ChineseTraditional.git
 
-  echo "[-] mv MCSManager-Web-Production web"
-  mv MCSManager-Web-Production web
+  echo "[-] mv MCSManager-Web-ChineseTraditional web"
+  mv MCSManager-Web-ChineseTraditional web
 
   echo "[→] cd web"
   cd web || exit
