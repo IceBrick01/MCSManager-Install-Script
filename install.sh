@@ -1,7 +1,7 @@
 #!/bin/bash
 printf "\033c"
 
-mcsmanager_install_path="/opt/mcsm3"
+mcsmanager_install_path="/opt/mcsmzhtw"
 node_install_path="/opt/node-v14.17.6-linux-x64"
 
 Red_Error() {
@@ -64,16 +64,16 @@ Install_MCSManager() {
 Create_Service() {
 
   echo "[x] Initialize the service file"
-  rm -f /etc/systemd/system/mcsm3-daemon.service
-  rm -f /etc/systemd/system/mcsm3-web.service
+  rm -f /etc/systemd/system/mcsmzhtw-daemon.service
+  rm -f /etc/systemd/system/mcsmzhtw-web.service
 
-  echo "[+] cat >>/etc/systemd/system/mcsm3-daemon.service"
-  cat >>/etc/systemd/system/mcsm3-daemon.service <<'EOF'
+  echo "[+] cat >>/etc/systemd/system/mcsmzhtw-daemon.service"
+  cat >>/etc/systemd/system/mcsmzhtw-daemon.service <<'EOF'
 [Unit]
 Description=MCSManager Daemon
 
 [Service]
-WorkingDirectory=/opt/mcsm3/daemon
+WorkingDirectory=/opt/mcsmzhtw/daemon
 ExecStart=/usr/bin/node app.js
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
@@ -82,13 +82,13 @@ ExecStop=/bin/kill -s QUIT $MAINPID
 WantedBy=multi-user.target
 EOF
 
-  echo "[+] cat >>/etc/systemd/system/mcsm3-web.service"
-  cat >>/etc/systemd/system/mcsm3-web.service <<'EOF'
+  echo "[+] cat >>/etc/systemd/system/mcsmzhtw-web.service"
+  cat >>/etc/systemd/system/mcsmzhtw-web.service <<'EOF'
 [Unit]
 Description=MCSManager Web
 
 [Service]
-WorkingDirectory=/opt/mcsm3/web
+WorkingDirectory=/opt/mcsmzhtw/web
 ExecStart=/usr/bin/node app.js
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
@@ -100,13 +100,13 @@ EOF
   echo "[-] systemctl daemon-reload"
   systemctl daemon-reload
 
-  echo "[+] systemctl enable mcsm3-daemon.service --now"
-  systemctl enable mcsm3-daemon.service --now
+  echo "[+] systemctl enable mcsmzhtw-daemon.service --now"
+  systemctl enable mcsmzhtw-daemon.service --now
 
   sleep 4
 
-  echo "[+] systemctl enable mcsm3-web.service --now"
-  systemctl enable mcsm3-web.service --now
+  echo "[+] systemctl enable mcsmzhtw-web.service --now"
+  systemctl enable mcsmzhtw-web.service --now
 
   sleep 4
 
@@ -121,11 +121,11 @@ EOF
   echo -e "\033[33mChinese: 安装且启动完毕，您必须开放 23333 与 24444 端口来确保面板的正常使用。\033[0m"
   echo ""
   echo "=================================================================="
-  echo "systemctl restart mcsm-{daemon,web}.service"
-  echo "systemctl disable mcsm-{daemon,web}.service"
-  echo "systemctl enable mcsm-{daemon,web}.service"
-  echo "systemctl start mcsm-{daemon,web}.service"
-  echo "systemctl stop mcsm-{daemon,web}.service"
+  echo "systemctl restart mcsmzhtw-{daemon,web}.service"
+  echo "systemctl disable mcsmzhtw-{daemon,web}.service"
+  echo "systemctl enable mcsmzhtw-{daemon,web}.service"
+  echo "systemctl start mcsmzhtw-{daemon,web}.service"
+  echo "systemctl stop mcsmzhtw-{daemon,web}.service"
   echo "=================================================================="
 
 }
@@ -149,7 +149,7 @@ echo "+----------------------------------------------------------------------
 +----------------------------------------------------------------------
 | Copyright © 2021 Suwings All rights reserved.
 +----------------------------------------------------------------------
-| Shell Install Script by Nuomiaa
+| Shell Install Script by IceBrick
 +----------------------------------------------------------------------
 "
 
